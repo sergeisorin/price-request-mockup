@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deal Configuration — Mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f5f1;--surface:#fff;--border:#e6e3dc;--border-hover:#cbc7be;
+  --text:#1c1c28;--text-2:#5e5e72;--text-3:#9898aa;
+  --accent:#4338ca;--accent-hover:#3730a3;--accent-pale:#eef2ff;--accent-border:#c7d2fe;
+  --green:#059669;--green-pale:#ecfdf5;--green-text:#065f46;
+  --amber-pale:#fffbeb;--amber-text:#92400e;
+  --blue-pale:#eff6ff;--blue-text:#1e40af;
+  --red:#dc2626;
+  --sh-1:0 1px 3px rgba(26,26,46,.05);
+  --sh-2:0 4px 12px rgba(26,26,46,.07),0 1px 3px rgba(26,26,46,.04);
+  --sh-3:0 8px 24px rgba(26,26,46,.10),0 2px 6px rgba(26,26,46,.04);
+  --r:12px;--r-sm:8px
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);background-image:linear-gradient(160deg,#f6f5f1,#efeee9 50%,#f5f3ef);color:var(--text);min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased}
+.app{max-width:760px;margin:0 auto;padding:40px 24px 80px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:var(--r-sm);font-size:.85rem;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:all .15s ease;letter-spacing:-.01em}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 1px 3px rgba(67,56,202,.25),0 1px 2px rgba(67,56,202,.15)}
+.btn-primary:hover{background:var(--accent-hover);box-shadow:0 2px 6px rgba(67,56,202,.3),0 1px 3px rgba(67,56,202,.15)}
+.btn-secondary{background:var(--border);color:var(--text-2)}.btn-secondary:hover{background:var(--border-hover);color:var(--text)}
+.btn-ghost{background:transparent;color:var(--text-3)}.btn-ghost:hover{background:var(--border);color:var(--text-2)}
+.btn-danger{background:transparent;color:var(--red);font-size:.8rem;padding:4px 8px}.btn-danger:hover{text-decoration:underline}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;padding-bottom:20px;border-bottom:2px solid var(--border)}
+.header h1{font-size:1.25rem;font-weight:700;letter-spacing:-.02em}
+.stepper{display:flex;align-items:center;margin-bottom:40px;padding:16px 20px;background:var(--surface);border-radius:var(--r);box-shadow:var(--sh-1);border:1px solid var(--border)}
+.s-step{display:flex;align-items:center;gap:8px}
+.s-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;background:var(--border);color:var(--text-3);flex-shrink:0;transition:all .3s ease}
+.s-step.active .s-num{background:var(--accent);color:#fff;box-shadow:0 2px 8px rgba(67,56,202,.3)}
+.s-step.done .s-num{background:var(--green);color:#fff}
+.s-lbl{font-size:.78rem;color:var(--text-3);white-space:nowrap;font-weight:500;transition:color .2s}
+.s-step.active .s-lbl{color:var(--text);font-weight:600}
+.s-step.done .s-lbl{color:var(--text-2)}
+.s-line{flex:1;height:2px;background:var(--border);margin:0 8px;min-width:12px;transition:background .3s ease}
+.s-step.done+.s-line{background:var(--green)}
+.panel{display:none}.panel.active{display:block;animation:panelIn .35s ease-out}
+@keyframes panelIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.field{margin-bottom:20px}
+.label{display:block;font-size:.72rem;font-weight:600;color:var(--text-2);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}
+input[type=text],input[type=number],input[type=date],select{width:100%;padding:10px 14px;border-radius:var(--r-sm);border:1.5px solid var(--border);background:var(--surface);color:var(--text);font-size:.88rem;font-family:inherit;transition:border-color .15s,box-shadow .15s}
+input:focus,select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(67,56,202,.1)}
+input:read-only{background:#f8f7f4;color:var(--text-2)}
+.hint{font-size:.72rem;color:var(--text-3);margin-top:4px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.row-inline{display:flex;gap:8px;align-items:center}
+.row-inline input{max-width:80px}
+.opts{display:flex;flex-wrap:wrap;gap:10px}
+.opt{padding:14px 20px;border:2px solid var(--border);border-radius:var(--r);cursor:pointer;font-size:.84rem;background:var(--surface);transition:all .15s ease;user-select:none}
+.opt:hover{border-color:var(--border-hover);box-shadow:var(--sh-1)}
+.opt.on{border-color:var(--accent);background:var(--accent-pale);box-shadow:0 0 0 3px rgba(67,56,202,.08)}
+.opt .sub{display:block;font-size:.72rem;color:var(--text-2);margin-top:3px}
+.opt .badge{display:inline-block;font-size:.7rem;font-weight:600;color:var(--green);margin-top:4px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:16px;box-shadow:var(--sh-1)}
+.card-title{font-size:.9rem;font-weight:700;margin-bottom:16px;letter-spacing:-.01em}
+.skeleton{background:var(--surface);border:2px dashed var(--border);border-radius:var(--r);padding:28px;margin-bottom:16px;text-align:center;color:var(--text-3)}
+.skeleton-title{font-size:.9rem;font-weight:700;margin-bottom:8px;color:var(--text-2)}
+.skeleton-badge{display:inline-block;font-size:.68rem;font-weight:700;background:var(--amber-pale);color:var(--amber-text);padding:3px 10px;border-radius:4px;margin-top:6px}
+.tabs{display:flex;gap:4px;margin-bottom:24px}
+.tab{padding:8px 18px;border-radius:var(--r-sm);font-size:.8rem;font-weight:600;cursor:pointer;background:transparent;border:none;color:var(--text-3);font-family:inherit;transition:all .15s}
+.tab:hover{color:var(--text-2)}.tab.on{background:var(--surface);color:var(--text);box-shadow:var(--sh-2)}
+.dcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:10px;cursor:pointer;transition:all .18s ease;box-shadow:var(--sh-1);animation:cardIn .4s ease-out backwards}
+.dcard:nth-child(1){animation-delay:0s}.dcard:nth-child(2){animation-delay:.05s}
+.dcard:nth-child(3){animation-delay:.1s}.dcard:nth-child(4){animation-delay:.15s}
+.dcard:nth-child(5){animation-delay:.2s}
+@keyframes cardIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.dcard:hover{border-color:var(--border-hover);box-shadow:var(--sh-2);transform:translateY(-1px)}
+.dcard-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.dcard-id{font-weight:700;font-size:.92rem;letter-spacing:-.01em}
+.pill{font-size:.67rem;font-weight:700;text-transform:uppercase;padding:3px 10px;border-radius:4px;letter-spacing:.03em}
+.pill-submitted{background:var(--amber-pale);color:var(--amber-text)}
+.pill-approved{background:var(--green-pale);color:var(--green-text)}
+.pill-active{background:var(--blue-pale);color:var(--blue-text)}
+.pill-draft{background:#f4f3f0;color:var(--text-3)}
+.dcard-meta{font-size:.78rem;color:var(--text-2);display:flex;flex-wrap:wrap;gap:14px}
+.dcard-target{font-size:.82rem;color:var(--text-2);margin-top:6px}
+.empty{text-align:center;padding:48px 24px;color:var(--text-3);font-size:.9rem}
+.fee-item{display:flex;justify-content:space-between;align-items:center;padding:14px;background:#f8f7f4;border-radius:var(--r-sm);margin-bottom:8px;border:1px solid var(--border);font-size:.84rem;transition:all .15s}
+.fee-item strong{color:var(--text)}
+.fee-item .scope{font-size:.7rem;color:var(--text-3);margin-left:4px}
+.fee-item .vals{color:var(--text-2)}
+.fee-item.existing{background:var(--surface);border:1px solid var(--border);opacity:.65}
+.fee-item.existing .tag{font-size:.65rem;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.03em}
+.fee-item.new-fee{background:var(--accent-pale);border:1px solid var(--accent-border)}
+.fee-item.new-fee .tag{font-size:.65rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.03em}
+.rv{margin-bottom:24px}
+.rv h4{font-size:.72rem;font-weight:700;color:var(--text-2);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid var(--border)}
+.rv-row{display:flex;padding:8px 0;font-size:.88rem;border-bottom:1px solid #f4f3f0}
+.rv-row:last-child{border:none}
+.rv-k{color:var(--text-3);min-width:150px;flex-shrink:0;font-weight:500}.rv-v{color:var(--text)}
+.ma-bar{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:16px 18px;margin-bottom:20px;box-shadow:var(--sh-1)}
+.ma-bar strong{font-size:.92rem;color:var(--text);letter-spacing:-.01em}
+.ma-bar .id{font-size:.75rem;color:var(--text-3);margin-left:6px}
+.ah-card{padding:12px 16px;border-radius:var(--r-sm);font-size:.82rem;margin-bottom:6px;background:var(--surface);border:1px solid var(--border);transition:border-color .12s}
+.ah-card:hover{border-color:var(--border-hover)}
+.ah-card .ah-name{font-weight:600;color:var(--text)}.ah-card .ah-id{color:var(--text-3);font-size:.72rem;margin-left:6px}
+.ah-card .ah-w2b{font-size:.72rem;color:var(--green);font-weight:600}
+.nav{display:flex;justify-content:space-between;margin-top:36px;padding-top:20px;border-top:2px solid var(--border)}
+.tgt-card{display:flex;align-items:center;gap:14px;padding:14px 18px;border:1.5px solid var(--border);border-radius:var(--r);background:var(--surface);cursor:pointer;transition:all .15s;margin-bottom:8px}
+.tgt-card:hover{border-color:var(--border-hover);box-shadow:var(--sh-1)}
+.tgt-card.on{border-color:var(--accent);background:var(--accent-pale)}
+.tgt-check{width:22px;height:22px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.65rem;color:transparent;flex-shrink:0;transition:all .15s}
+.tgt-card.on .tgt-check{border-color:var(--accent);background:var(--accent);color:#fff}
+.tgt-name{font-weight:600;font-size:.88rem}
+.tgt-id{font-size:.75rem;color:var(--text-3);margin-left:8px;font-weight:400}
+.tgt-sub{font-size:.72rem;color:var(--text-2);margin-top:2px}
+.tgt-w2b{font-size:.72rem;color:var(--green);font-weight:600;margin-top:2px}
+.tgt-children{padding-left:24px;border-left:2px solid var(--border);margin-left:16px;padding-top:4px}
+.fee-group{margin-bottom:10px}
+.fee-item.new-fee.has-ov{border-radius:var(--r-sm) var(--r-sm) 0 0;margin-bottom:0}
+.fee-overrides{padding:10px 14px;background:#faf9f6;border:1px solid var(--border);border-top:1px dashed var(--border-hover);border-radius:0 0 var(--r-sm) var(--r-sm)}
+.fee-ov-label{font-size:.68rem;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.04em;display:block;margin-bottom:4px}
+.fee-override{display:flex;justify-content:space-between;align-items:center;font-size:.78rem;color:var(--text-2);padding:3px 0}
+.fee-ov-val{text-decoration:line-through;color:var(--text-3)}
+.fee-ov-ah{font-size:.72rem;color:var(--text-3)}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- DEAL LIST -->
+  <div id="v-list">
+    <div class="header"><h1>Deals</h1><button class="btn btn-primary" onclick="startWizard()">+ New deal</button></div>
+    <div class="tabs" id="tabs"></div>
+    <div id="list"></div>
+  </div>
+
+  <!-- WIZARD -->
+  <div id="v-wiz" style="display:none">
+    <div class="header"><button class="btn btn-ghost" onclick="backToList()">&#8592; Deals</button><h1>New price request</h1></div>
+    <div class="stepper" id="stepper"></div>
+
+    <!-- Step 1 — Search -->
+    <div class="panel" data-p="1">
+      <div class="field">
+        <span class="label">Search master account</span>
+        <input type="text" id="i-ma-q" placeholder="Type MA name or ID..." oninput="filterMAs()">
+        <span class="hint">Source: Salesforce. Future: search by account manager, region, etc.</span>
+      </div>
+      <div class="field">
+        <span class="label">Select master account</span>
+        <div class="opts" id="ma-list"></div>
+      </div>
+      <div class="field" id="opp-wrap" style="display:none">
+        <span class="label">Select opportunity</span>
+        <select id="i-opp"><option value="">Select…</option></select>
+      </div>
+    </div>
+
+    <!-- Step 2 — Target -->
+    <div class="panel" data-p="2">
+      <div class="field">
+        <span class="label">Select target</span>
+        <div id="target-tree"></div>
+      </div>
+    </div>
+
+    <!-- Step 3 — Request type -->
+    <div class="panel" data-p="3">
+      <div class="field">
+        <span class="label">Price request type</span>
+        <div class="opts" id="rtype-opts"></div>
+      </div>
+      <div id="sub-form" style="display:none">
+        <div class="card">
+          <div class="card-title">Subscription details</div>
+          <div class="row2">
+            <div class="field"><span class="label">Plan</span><select id="i-plan"></select></div>
+            <div class="field">
+              <span class="label">Effective from</span>
+              <select id="i-eff-type" onchange="toggleEffDate()">
+                <option value="immediate">Immediately after approval</option>
+                <option value="date">Specific date</option>
+              </select>
+            </div>
+          </div>
+          <div class="field" id="eff-date-wrap" style="display:none"><span class="label">Start date</span><input type="date" id="i-eff"></div>
+          <div class="row2">
+            <div class="field"><span class="label">Plan charge</span><input type="text" id="i-charge" placeholder="0.00" oninput="formatThousands(this)"></div>
+            <div class="field"><span class="label">Billing currency</span><select id="i-bcurr"></select></div>
+          </div>
+          <div class="row2">
+            <div class="field"><span class="label">Subscription period</span>
+              <div class="row-inline"><input type="number" id="i-intcnt" value="1" min="1"><select id="i-intunit"><option value="month">month(s)</option><option value="year">year(s)</option></select></div>
+            </div>
+            <div class="field"><span class="label">Billing method</span>
+              <select id="i-bmethod"><option value="payo_balance">Payo balance</option><option value="credit_card">Credit card</option><option value="manual">Manual</option></select>
+            </div>
+          </div>
+          <div class="field"><span class="label">Auto-renewed</span><select id="i-autorenew"><option value="yes">Yes</option><option value="no">No</option></select></div>
+        </div>
+      </div>
+      <div id="vol-form" style="display:none">
+        <div class="card">
+          <div class="card-title">Volume commitment — deal conditions</div>
+          <div class="field"><span class="label">Plan</span><input type="text" value="VIP" readonly><span class="hint">Volume commitment is always on the VIP plan.</span></div>
+          <div class="row2">
+            <div class="field"><span class="label">Threshold amount</span><input type="text" id="i-tamt" placeholder="0" oninput="formatThousands(this)"></div>
+            <div class="field"><span class="label">Threshold currency</span><select id="i-tcurr"></select></div>
+          </div>
+          <div class="row2">
+            <div class="field"><span class="label">Measure</span><select id="i-tmeas"><option value="volume">Volume</option><option value="usage">Usage</option></select></div>
+            <div class="field"><span class="label">Direction</span><select id="i-tdir"><option value="breach_above">Breach above</option><option value="breach_below">Breach below</option></select></div>
+          </div>
+          <div class="row2">
+            <div class="field"><span class="label">Enforcement</span><select id="i-tenf"><option value="hard">Hard</option><option value="soft">Soft</option></select></div>
+            <div class="field"><span class="label">Grace period</span>
+              <div class="row-inline"><input type="number" id="i-gpcnt" value="0" min="0"><select id="i-gpunit"><option value="days">day(s)</option><option value="months">month(s)</option></select></div>
+            </div>
+          </div>
+        </div>
+        <div class="skeleton">
+          <div class="skeleton-title">Action on commitment breach</div>
+          <div>What happens when the threshold is breached?<br>Revert to standard pricing, notify account manager, block transactions, etc.</div>
+          <div class="skeleton-badge">Solution TBD</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4 — Fees -->
+    <div class="panel" data-p="4">
+      <div class="card">
+        <div class="card-title">Add fee adjustment</div>
+        <div class="row2">
+          <div class="field"><span class="label">Product</span><select id="i-prod" onchange="onProductChange()"></select></div>
+          <div class="field"><span class="label">Classification</span><select id="i-class" onchange="onClassChange()"></select></div>
+        </div>
+        <div id="scope-wrap" style="display:none">
+          <div class="row2">
+            <div class="field"><span class="label">Source country</span><select id="i-scnt"></select></div>
+            <div class="field"><span class="label">Target country</span><select id="i-tcnt"></select></div>
+          </div>
+          <div class="row2">
+            <div class="field"><span class="label">Source currency</span><select id="i-scur" onchange="onScopeCurrChange()"></select></div>
+            <div class="field"><span class="label">Target currency</span><select id="i-tcur"></select></div>
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field"><span class="label">Percent (%)</span><input type="number" id="i-pct" placeholder="1.5" step=".01" min="0" oninput="onFeeValChange()"></div>
+          <div class="field"><span class="label">Fixed fee</span><input type="number" id="i-fix" placeholder="0.50" step=".01" min="0" oninput="onFeeValChange()"></div>
+        </div>
+        <div class="hint" id="combo-hint" style="display:none;margin:-10px 0 14px">When both percent and fixed are set, the fee is percent + fixed per transaction.</div>
+        <div class="row2">
+          <div class="field"><span class="label">Min fee</span><input type="number" id="i-min" placeholder="0" step=".01" min="0" oninput="onFeeValChange()"></div>
+          <div class="field"><span class="label">Max fee</span><input type="number" id="i-max" placeholder="—" step=".01" min="0" oninput="onFeeValChange()"></div>
+        </div>
+        <div class="field" id="fcur-wrap" style="display:none">
+          <span class="label">Currency</span>
+          <select id="i-fcur"></select>
+          <span class="hint" id="fcur-hint"></span>
+        </div>
+        <button class="btn btn-secondary" onclick="addFee()" style="margin-top:6px">+ Add this fee</button>
+      </div>
+      <span class="label">Fees in this deal</span>
+      <div id="fee-list"></div>
+    </div>
+
+    <!-- Step 5 — Review -->
+    <div class="panel" data-p="5" id="review"></div>
+
+    <div class="nav">
+      <button class="btn btn-ghost" id="b-prev" onclick="prev()">Previous</button>
+      <button class="btn btn-primary" id="b-next" onclick="next()">Next</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const D = {
+  plans:[{id:'plan-vip',name:'VIP'},{id:'plan-gold',name:'Gold'},{id:'plan-premium',name:'Premium'},{id:'plan-max',name:'Max'}],
+  masterAccounts:[
+    {id:'ma-500',name:'Acme Corp Global'},
+    {id:'ma-501',name:'Beta Group'},
+    {id:'ma-502',name:'Delta Holdings'}
+  ],
+  opportunities:[
+    {id:'opp-08921',ma:'ma-500'},{id:'opp-08915',ma:'ma-501'},
+    {id:'opp-08890',ma:'ma-501'},{id:'opp-08875',ma:'ma-502'},
+    {id:'opp-08930',ma:'ma-500'}
+  ],
+  accountHolders:[
+    {id:'ah-1001',name:'Acme Corp EU',ma:'ma-500',w2b:'0.8%'},
+    {id:'ah-1002',name:'Acme Corp US',ma:'ma-500',w2b:'1.2%'},
+    {id:'ah-1003',name:'Beta Ltd',ma:'ma-501',w2b:'0.5%'},
+    {id:'ah-1004',name:'Gamma Inc',ma:'ma-501',w2b:'1.5%'},
+    {id:'ah-1005',name:'Delta Trading',ma:'ma-502',w2b:'1.0%'}
+  ],
+  existingFees:{
+    'ah-1001':[
+      {prod:'W2B',cls:'any',fee:'0.8%',scope:'any'},
+      {prod:'W2B',cls:'fx',fee:'1.5% + 0.50 EUR',scope:'any'},
+      {prod:'PON',cls:'any',fee:'1%',scope:'any'},
+      {prod:'Manage Currency',cls:'any',fee:'0.5%',scope:'any'}
+    ],
+    'ah-1002':[
+      {prod:'W2B',cls:'any',fee:'1.2%',scope:'any'},
+      {prod:'W2B',cls:'l2l_non_local',fee:'0.5%',scope:'any'},
+      {prod:'BLS',cls:'credit_card',fee:'3.99%',scope:'any'},
+      {prod:'BLS',cls:'e_check',fee:'1%',scope:'any'},
+      {prod:'PS',cls:'ach',fee:'FREE',scope:'any'},
+      {prod:'PS',cls:'swift',fee:'1% + 1.50 USD',scope:'any'}
+    ],
+    'ah-1003':[
+      {prod:'W2B',cls:'any',fee:'0.5%',scope:'any'},
+      {prod:'MAP',cls:'domestic',fee:'1%',scope:'any'},
+      {prod:'MAP',cls:'international',fee:'3%',scope:'any'},
+      {prod:'Manage Currency',cls:'any',fee:'0.5%',scope:'any'}
+    ],
+    'ah-1004':[
+      {prod:'W2B',cls:'any',fee:'1.5%',scope:'any'},
+      {prod:'PON',cls:'any',fee:'2%',scope:'any'}
+    ],
+    'ah-1005':[
+      {prod:'W2B',cls:'any',fee:'1.0%',scope:'any'},
+      {prod:'W2B',cls:'fx',fee:'2% + 0.25 USD',scope:'any'},
+      {prod:'BLS',cls:'credit_card',fee:'3.99% + 0.49 USD',scope:'any'},
+      {prod:'BLS',cls:'paypal',fee:'3.99% + 0.49 USD',scope:'any'},
+      {prod:'PS',cls:'any',fee:'FREE',scope:'any'},
+      {prod:'Manage Currency',cls:'any',fee:'0.5%',scope:'any'}
+    ]
+  },
+  products:{
+    W2B:['any','all_but_l2l_local','l2l_non_local','fx','specific'],
+    PON:['any','all_but_l2l_local','l2l_non_local','fx','specific'],
+    MAP:['domestic','international','any'],
+    BLS:['credit_card','e_check','paypal'],
+    'Manage Currency':['any'],
+    PS:['any','ach','swift']
+  },
+  countries:['US','GB','DE','FR','IT','ES','PL','BR','MX','IN','AU','JP','SG'],
+  currencies:['USD','EUR','GBP','PLN','BRL','MXN','INR','AUD','JPY','SGD'],
+  deals:[
+    {id:'deal-001',opp:'opp-08921',type:'subscription',plan:'Gold',target:'Acme Corp EU, Acme Corp US',status:'submitted',date:'2026-03-08',fees:4,by:'Jane Smith'},
+    {id:'deal-002',opp:'opp-08915',type:'subscription',plan:'Premium',target:'Beta Ltd',status:'submitted',date:'2026-03-07',fees:2,by:'John Doe'},
+    {id:'deal-003',opp:'opp-08890',type:'volume_commitment',plan:'VIP',target:'Beta Group (MA)',status:'approved',date:'2026-03-05',fees:3,by:'Jane Smith'},
+    {id:'deal-004',opp:'opp-08875',type:'subscription',plan:'Gold',target:'Delta Trading',status:'active',date:'2026-03-02',fees:5,by:'Alex Chen'},
+    {id:'deal-005',opp:'opp-08930',type:'volume_commitment',plan:'VIP',target:'Acme Corp EU',status:'draft',date:null,fees:1,by:'John Doe'}
+  ]
+};
+
+// STATE
+const STEPS=['Search','Target','Request','Fees','Review'];
+let step=1,filter='submitted';
+let st=reset();
+function reset(){return{maId:null,oppId:null,targetType:'master_account',ahIds:[],rtype:'volume_commitment',fees:[]}}
+const $=id=>document.getElementById(id);
+
+// THOUSAND SEPARATOR
+function formatThousands(el){
+  const pos=el.selectionStart;
+  const raw=el.value.replace(/[^0-9.]/g,'');
+  const parts=raw.split('.');
+  parts[0]=parts[0].replace(/\B(?=(\d{3})+(?!\d))/g,',');
+  el.value=parts.join('.');
+}
+function parseAmt(id){return parseFloat(($(id).value||'0').replace(/,/g,''))||0}
+
+// EFFECTIVE FROM
+function toggleEffDate(){
+  $('eff-date-wrap').style.display=$('i-eff-type').value==='date'?'':'none';
+}
+
+// DEAL LIST
+function renderList(){
+  $('v-list').style.display='';$('v-wiz').style.display='none';
+  $('tabs').innerHTML=['submitted','draft','approved','active'].map(f=>`<button class="tab${f===filter?' on':''}" onclick="filter='${f}';renderList()">${f[0].toUpperCase()+f.slice(1)}</button>`).join('');
+  const items=D.deals.filter(d=>d.status===filter);
+  $('list').innerHTML=items.length?items.map(d=>`
+    <div class="dcard">
+      <div class="dcard-top"><span class="dcard-id">${d.id}</span><span class="pill pill-${d.status}">${d.status}</span></div>
+      <div class="dcard-meta">
+        <span>${d.opp}</span><span>${d.type==='volume_commitment'?'Volume commitment':'Subscription'}</span>
+        <span>${d.plan}</span><span>${d.fees} fee${d.fees!==1?'s':''}</span>
+        <span>${d.date||'—'}</span><span>by ${d.by}</span>
+      </div>
+      <div class="dcard-target">${d.target}</div>
+    </div>`).join(''):'<div class="empty">No '+filter+' deals</div>';
+}
+
+// WIZARD NAV
+function startWizard(){st=reset();step=1;$('v-list').style.display='none';$('v-wiz').style.display='';$('i-ma-q').value='';renderStep()}
+function backToList(){renderList()}
+function next(){if(valid()){step++;renderStep()}}
+function prev(){if(step>1){step--;renderStep()}}
+
+function renderStep(){
+  $('stepper').innerHTML=STEPS.map((s,i)=>{
+    const n=i+1,c=n<step?'done':n===step?'active':'';
+    return(i?'<div class="s-line"></div>':'')+`<div class="s-step ${c}"><span class="s-num">${n}</span><span class="s-lbl">${s}</span></div>`;
+  }).join('');
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',+p.dataset.p===step));
+  $('b-prev').style.visibility=step>1?'visible':'hidden';
+  $('b-next').textContent=step===5?'Submit for approval':'Next';
+  $('b-next').onclick=step===5?submitDeal:next;
+  [buildS1,buildS2,buildS3,buildS4,buildS5][step-1]();
+}
+
+// STEP 1 — SEARCH
+function buildS1(){renderMAs();renderOpps()}
+function filterMAs(){renderMAs()}
+function renderMAs(){
+  const q=($('i-ma-q').value||'').toLowerCase();
+  const list=D.masterAccounts.filter(m=>!q||m.name.toLowerCase().includes(q)||m.id.includes(q));
+  $('ma-list').innerHTML=list.map(m=>`<div class="opt${st.maId===m.id?' on':''}" onclick="pickMA('${m.id}')"><strong>${m.name}</strong><span class="sub">${m.id}</span></div>`).join('')||'<div class="empty" style="padding:12px;width:100%">No results</div>';
+}
+function pickMA(id){st.maId=id;st.oppId=null;st.ahIds=[];renderMAs();renderOpps()}
+function renderOpps(){
+  const opps=D.opportunities.filter(o=>o.ma===st.maId);
+  $('opp-wrap').style.display=opps.length?'':'none';
+  $('i-opp').innerHTML='<option value="">Select opportunity…</option>'+opps.map(o=>`<option value="${o.id}"${o.id===st.oppId?' selected':''}>${o.id}</option>`).join('');
+  $('i-opp').onchange=e=>{st.oppId=e.target.value};
+}
+
+// STEP 2 — TARGET
+function buildS2(){
+  const ma=D.masterAccounts.find(m=>m.id===st.maId);
+  const ahs=D.accountHolders.filter(a=>a.ma===st.maId);
+  const maOn=st.targetType==='master_account';
+  let h='';
+  if(ma){
+    h+=`<div class="tgt-card${maOn?' on':''}" onclick="pickTgt()">
+      <div class="tgt-check">${maOn?'&#10003;':''}</div>
+      <div><div class="tgt-name">${ma.name}<span class="tgt-id">${ma.id}</span></div>
+      <div class="tgt-sub">Master account &middot; Applies to all linked holders</div></div></div>`;
+    if(ahs.length){
+      h+='<div class="tgt-children">';
+      h+=ahs.map(a=>{
+        const on=!maOn&&st.ahIds.includes(a.id);
+        return`<div class="tgt-card tgt-child${on?' on':''}" onclick="togTarget('${a.id}')">
+          <div class="tgt-check">${on?'&#10003;':''}</div>
+          <div><div class="tgt-name">${a.name}<span class="tgt-id">${a.id}</span></div>
+          <div class="tgt-w2b">Lowest W2B: ${a.w2b}</div></div></div>`;
+      }).join('');
+      h+='</div>';
+    }
+  }
+  $('target-tree').innerHTML=h;
+}
+function pickTgt(){st.targetType='master_account';st.ahIds=[];buildS2()}
+function togTarget(id){
+  st.targetType='account_holder';
+  const i=st.ahIds.indexOf(id);if(i>=0)st.ahIds.splice(i,1);else st.ahIds.push(id);
+  if(!st.ahIds.length)st.targetType='master_account';
+  buildS2();
+}
+
+// STEP 3 — REQUEST TYPE
+function buildS3(){
+  renderRType();showRForm();
+  fill('i-plan',D.plans.filter(p=>p.id!=='plan-vip').map(p=>({v:p.id,t:p.name})));
+  fill('i-bcurr',D.currencies.map(c=>({v:c,t:c})));
+  fill('i-tcurr',D.currencies.map(c=>({v:c,t:c})));
+}
+function renderRType(){
+  $('rtype-opts').innerHTML=[
+    {k:'volume_commitment',t:'Volume commitment',s:'Deal conditions (thresholds). Plan is VIP.'},
+    {k:'subscription',t:'Subscription',s:'Select plan, billing, and subscription period.'}
+  ].map(o=>`<div class="opt${st.rtype===o.k?' on':''}" onclick="pickRT('${o.k}')">${o.t}<span class="sub">${o.s}</span></div>`).join('');
+}
+function pickRT(t){st.rtype=t;renderRType();showRForm()}
+function showRForm(){
+  $('sub-form').style.display=st.rtype==='subscription'?'':'none';
+  $('vol-form').style.display=st.rtype==='volume_commitment'?'':'none';
+}
+
+// STEP 4 — FEES
+function buildS4(){
+  fill('i-prod',Object.keys(D.products).map(p=>({v:p,t:p})),'Select product');
+  $('i-class').innerHTML='<option value="">Select classification</option>';
+  fill('i-scnt',D.countries.map(c=>({v:c,t:c})),'Any');
+  fill('i-tcnt',D.countries.map(c=>({v:c,t:c})),'Any');
+  fill('i-scur',D.currencies.map(c=>({v:c,t:c})),'Select');
+  fill('i-tcur',D.currencies.map(c=>({v:c,t:c})),'Select');
+  fill('i-fcur',D.currencies.map(c=>({v:c,t:c})),'Select');
+  $('scope-wrap').style.display='none';$('fcur-wrap').style.display='none';$('combo-hint').style.display='none';
+  clearFeeIn();renderFees();
+}
+function onProductChange(){
+  const p=$('i-prod').value,cls=D.products[p]||[];
+  $('i-class').innerHTML='<option value="">Select classification</option>'+cls.map(c=>`<option value="${c}">${c}</option>`).join('');
+  onClassChange();
+}
+function onClassChange(){
+  const sp=$('i-class').value==='specific';
+  $('scope-wrap').style.display=sp?'':'none';
+  if(!sp){['i-scnt','i-tcnt','i-scur','i-tcur'].forEach(id=>$(id).value='')}
+  onFeeValChange();
+}
+function onScopeCurrChange(){if($('i-class').value==='specific')$('i-fcur').value=$('i-scur').value;onFeeValChange()}
+function onFeeValChange(){
+  const hasAmt=$('i-fix').value||$('i-min').value||$('i-max').value;
+  const sp=$('i-class').value==='specific';
+  const hasBoth=$('i-pct').value&&$('i-fix').value;
+  $('combo-hint').style.display=hasBoth?'block':'none';
+  if(hasAmt){
+    $('fcur-wrap').style.display='';
+    if(sp){$('i-fcur').value=$('i-scur').value;$('i-fcur').disabled=true;$('fcur-hint').textContent='Derived from source currency.'}
+    else{$('i-fcur').disabled=false;$('fcur-hint').textContent='Always equals source currency.'}
+  }else{$('fcur-wrap').style.display='none';$('i-fcur').value=''}
+}
+function addFee(){
+  const prod=$('i-prod').value,cls=$('i-class').value;if(!prod||!cls)return;
+  const sp=cls==='specific';
+  const scope=sp?[$('i-scnt').value,$('i-tcnt').value,$('i-scur').value,$('i-tcur').value].filter(Boolean).join(' → ')||'any':'any';
+  const pct=num('i-pct'),fix=num('i-fix'),mn=num('i-min'),mx=num('i-max');
+  const hasAmt=fix||mn||mx;
+  const cur=sp?$('i-scur').value:(hasAmt?$('i-fcur').value:null);
+  if(hasAmt&&!cur){alert('Select currency for fixed/min/max fees.');return}
+  st.fees.push({prod,cls,scope,pct,fix,mn,mx,cur});
+  clearFeeIn();renderFees();
+}
+function rmFee(i){st.fees.splice(i,1);renderFees()}
+
+function fmtFee(f){
+  const parts=[];
+  if(f.pct&&f.fix)parts.push(f.pct+'% + '+f.fix+(f.cur?' '+f.cur:''));
+  else{if(f.pct)parts.push(f.pct+'%');if(f.fix)parts.push(f.fix+(f.cur?' '+f.cur:''))}
+  if(f.mn)parts.push('min '+f.mn);if(f.mx)parts.push('max '+f.mx);
+  return parts.join(' · ')||'—';
+}
+
+function getExistingFees(){
+  const ids=st.targetType==='account_holder'?st.ahIds:D.accountHolders.filter(a=>a.ma===st.maId).map(a=>a.id);
+  const seen=new Set();const out=[];
+  ids.forEach(id=>{
+    const ah=D.accountHolders.find(a=>a.id===id);
+    (D.existingFees[id]||[]).forEach(f=>{
+      const key=id+f.prod+f.cls;
+      if(!seen.has(key)){seen.add(key);out.push({...f,ahName:ah?.name||id})}
+    });
+  });
+  return out;
+}
+
+function matchOverrides(nf,existing){
+  return existing.filter(ef=>{
+    if(ef.prod!==nf.prod)return false;
+    if(nf.cls==='any')return true;
+    return ef.cls===nf.cls;
+  });
+}
+
+function renderFees(){
+  const existing=getExistingFees();
+  const usedKeys=new Set();
+  const newHtml=st.fees.map((f,i)=>{
+    const ov=matchOverrides(f,existing);
+    ov.forEach(o=>usedKeys.add(o.ahName+'|'+o.prod+'|'+o.cls));
+    const hasOv=ov.length>0;
+    const ovHtml=hasOv?`<div class="fee-overrides"><span class="fee-ov-label">Replaces</span>`+ov.map(o=>`<div class="fee-override"><span>${o.prod} / ${o.cls} — <span class="fee-ov-val">${o.fee}</span></span><span class="fee-ov-ah">${o.ahName}</span></div>`).join('')+'</div>':'';
+    return`<div class="fee-group"><div class="fee-item new-fee${hasOv?' has-ov':''}">
+      <div><span class="tag">New</span><br><strong>${f.prod}</strong> / ${f.cls}<span class="scope">${f.scope!=='any'?f.scope:''}</span><br><span class="vals">${fmtFee(f)}</span></div>
+      <button class="btn-danger" onclick="rmFee(${i})">Remove</button>
+    </div>${ovHtml}</div>`;
+  }).join('');
+  const rest=existing.filter(ef=>!usedKeys.has(ef.ahName+'|'+ef.prod+'|'+ef.cls));
+  const restHtml=rest.length?rest.map(f=>`
+    <div class="fee-item existing">
+      <div><span class="tag">Current — ${f.ahName}</span><br><strong>${f.prod}</strong> / ${f.cls}<br><span class="vals">${f.fee}</span></div>
+    </div>`).join(''):'';
+  $('fee-list').innerHTML=(newHtml||'<div class="empty" style="padding:16px">No new fees added yet</div>')+(restHtml?'<div style="margin-top:16px"><span class="label">Unchanged fees</span></div>'+restHtml:'');
+}
+
+function clearFeeIn(){
+  ['i-prod','i-class','i-scnt','i-tcnt','i-scur','i-tcur','i-pct','i-fix','i-min','i-max','i-fcur'].forEach(id=>{const e=$(id);if(e.tagName==='SELECT')e.selectedIndex=0;else e.value=''});
+  $('scope-wrap').style.display='none';$('fcur-wrap').style.display='none';$('combo-hint').style.display='none';
+}
+
+// STEP 5 — REVIEW
+function buildS5(){
+  const ma=D.masterAccounts.find(m=>m.id===st.maId);
+  const tgt=st.targetType==='account_holder'?st.ahIds.map(id=>D.accountHolders.find(a=>a.id===id)?.name).filter(Boolean).join(', '):(ma?ma.name+' (all)':'—');
+  const plan=st.rtype==='subscription'?($('i-plan').selectedOptions[0]?.text||'—'):'VIP';
+  const effFrom=$('i-eff-type').value==='immediate'?'Immediately after approval':($('i-eff').value||'—');
+  let det='';
+  if(st.rtype==='subscription'){
+    det=`<div class="rv"><h4>Subscription details</h4>
+      ${rr('Plan',plan)}${rr('Effective from',effFrom)}
+      ${rr('Plan charge',($('i-charge').value||'—')+' '+($('i-bcurr').value||''))}
+      ${rr('Subscription period',($('i-intcnt').value||'1')+' '+$('i-intunit').value+'(s)')}
+      ${rr('Billing method',$('i-bmethod').selectedOptions[0]?.text||'—')}
+      ${rr('Auto-renewed',$('i-autorenew').value)}</div>`;
+  }else{
+    det=`<div class="rv"><h4>Volume commitment</h4>
+      ${rr('Plan','VIP')}
+      ${rr('Threshold',($('i-tamt').value||'—')+' '+($('i-tcurr').value||'')+' ('+$('i-tmeas').value+', '+$('i-tdir').selectedOptions[0]?.text+')')}
+      ${rr('Enforcement',$('i-tenf').selectedOptions[0]?.text||'—')}
+      ${rr('Grace period',($('i-gpcnt').value||'0')+' '+$('i-gpunit').value)}</div>`;
+  }
+  const feeHtml=st.fees.map((f,i)=>rr((i+1)+'. '+f.prod+' / '+f.cls,fmtFee(f)+(f.scope!=='any'?' ('+f.scope+')':''))).join('');
+  $('review').innerHTML=`
+    <div class="rv"><h4>Deal basics</h4>${rr('Master account',ma?.name||'—')}${rr('Opportunity',st.oppId||'—')}${rr('Request type',st.rtype==='subscription'?'Subscription':'Volume commitment')}</div>
+    <div class="rv"><h4>Target</h4>${rr('Apply to',st.targetType==='account_holder'?'Specific account holders':'Master account (all)')}${rr('Entities',tgt)}</div>
+    ${det}
+    <div class="rv"><h4>Fee adjustments (${st.fees.length})</h4>${feeHtml||'<div class="rv-row"><span class="rv-v" style="color:var(--text-3)">No fees</span></div>'}</div>`;
+}
+function submitDeal(){
+  const ma=D.masterAccounts.find(m=>m.id===st.maId);
+  const plan=st.rtype==='subscription'?($('i-plan').selectedOptions[0]?.text||'—'):'VIP';
+  const tgt=st.targetType==='account_holder'?st.ahIds.map(id=>D.accountHolders.find(a=>a.id===id)?.name).filter(Boolean).join(', '):(ma?ma.name+' (MA)':'—');
+  D.deals.unshift({id:'deal-'+String(100+Math.floor(Math.random()*900)),opp:st.oppId,type:st.rtype,plan,target:tgt,status:'submitted',date:new Date().toISOString().slice(0,10),fees:st.fees.length,by:'Current user'});
+  filter='submitted';renderList();
+}
+
+// VALIDATION
+function valid(){
+  if(step===1)return st.maId&&st.oppId;
+  if(step===2)return st.targetType==='master_account'||st.ahIds.length>0;
+  if(step===3){
+    if(st.rtype==='subscription'){
+      const effOk=$('i-eff-type').value==='immediate'||$('i-eff').value;
+      return $('i-plan').value&&effOk&&parseAmt('i-charge')>0;
+    }
+    return parseAmt('i-tamt')>0&&$('i-tcurr').value;
+  }
+  if(step===4)return st.fees.length>0;
+  return true;
+}
+
+// HELPERS
+function fill(id,items,ph){$(id).innerHTML=(ph?`<option value="">${ph}</option>`:'')+items.map(i=>`<option value="${i.v}">${i.t}</option>`).join('')}
+function num(id){const v=$(id).value;return v?parseFloat(v):null}
+function rr(k,v){return`<div class="rv-row"><span class="rv-k">${k}</span><span class="rv-v">${v}</span></div>`}
+
+renderList();
+</script>
+</body>
+</html>
